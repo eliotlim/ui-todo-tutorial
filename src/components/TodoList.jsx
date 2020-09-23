@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Button } from "antd";
+import { delTodo } from "../context/todo.actions";
 import { TodoContext } from "../context/TodoContextProvider";
 
 const TodoTask = (props) => {
@@ -31,7 +32,7 @@ const TodoTask = (props) => {
 };
 
 export const TodoList = () => {
-  const { state } = useContext(TodoContext);
+  const { state, dispatch } = useContext(TodoContext);
 
   // useEffect(() => {
   //   const fetchTodos = async () => {
@@ -43,7 +44,8 @@ export const TodoList = () => {
   // }, [dispatch]);
 
   const handleDeleteTodo = (id) => {
-    // TODO: fill in
+    dispatch(delTodo(id));
+    console.log("Deleted: "+id);
   };
 
   return (
