@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button } from "antd";
-import { delTodo } from "../context/todo.actions";
+import { setTodos, delTodo } from "../context/todo.actions";
 import { TodoContext } from "../context/TodoContextProvider";
+import { firebaseApi } from "../services/firebaseApi"
 
 const TodoTask = (props) => {
   return (
@@ -34,16 +35,17 @@ const TodoTask = (props) => {
 export const TodoList = () => {
   const { state, dispatch } = useContext(TodoContext);
 
-  // useEffect(() => {
-  //   const fetchTodos = async () => {
-  //     const todos = await firebaseApi.fetchTodos();
-  //     dispatch(setTodos(todos));
-  //   }
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const todos = await firebaseApi.fetchTodos();
+      dispatch(setTodos(todos));
+    }
 
-  //   fetchTodos();
-  // }, [dispatch]);
+    fetchTodos();
+  }, [dispatch]);
 
   const handleDeleteTodo = (id) => {
+    firebaseApi.deleteTodo(id);
     dispatch(delTodo(id));
     console.log("Deleted: "+id);
   };
